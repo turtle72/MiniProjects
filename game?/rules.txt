@@ -1,0 +1,34 @@
+
+
+world is 64*64
+
+Dirt = D (basic walking square, anyone or thing can walk on it)
+
+Bear = B (The bear moves towards the player or bear bait every turn, player loses (dies) if the bear is on there square and alternates turn with the player. The bear moves 2 squares a turn compared to the 1 of the player)
+
+Player = P (the players location, can move once a turn )
+
+Water = W (acts as edges to the map, nowthing can pass it)
+
+Tree = T (blocks bears or player from going through, spawns fruit randomly)
+
+Item Crafter = I (only shown when within 1 square of, can craft bear bait when nearby)
+
+Fruit = F (fruit spawn near trees and can be crafted into bear bait at item crafter)
+
+Game Features:
+
+Day Night Cycle (dnc):
+Every ten player turns, it becomes night and the bear moves at half speed and the player can only see within 10 squares.
+
+Score Systems:
+
+Per day survived score: 6 points
+
+Scores during day:
+Craft Item: 2 points
+Bear Eats Bait: 2 points
+
+Scores during night:
+Craft Item: 2 points
+Bear Eats Bait: 3 points
