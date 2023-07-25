@@ -10,7 +10,7 @@ Player = P (the players location, can move once a turn )
 
 Water = W (acts as edges to the map, nowthing can pass it)
 
-Tree = T (blocks bears or player from going through, spawns fruit randomly)
+Tree = T (blocks bears or player from going through, spawns fruit rarly, max 4 fruit on map at a time)
 
 Item Crafter = I (only shown when within 1 square of, can craft bear bait when nearby)
 
