@@ -1,9 +1,15 @@
 import random
 from getch import getch
 import os
+import copy
 fMap = {}
 
+
 treeDB = []
+
+time = 0
+
+dnc = "day"
 
 inv = []
 
@@ -46,13 +52,38 @@ for item in fMap:
 
 notifCode = False
 
+
+# add item to inventory
 def addItem(type):
     global notifCode
     inv.append(type)
     notifCode = True
+
+
+#calculates the day night cycle
+def calctime(t=False):
+    global dnc, time, contrDisplay, contrDisplayNotif
+    if t == True:
+        time = time + 1
+    if time > 40:
+        time = 0
+    if time > 25:
+        dnc = 'night'
+    else:
+        dnc = 'day'
+        
+    contrDisplay = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/20 ({dnc})"
+    contrDisplayNotif = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/20 ({dnc}) I You picked up an item! enter inv to remove notification."
+
+
+
+
     
-contrDisplay = f"Player cords: X:{pX} Y:{pY} Open Inventory: I"
-contrDisplayNotif = f"Player cords: X:{pX} Y:{pY} Open Inventory: I You picked up an item! enter inv to remove notification."
+    
+contrDisplay = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/20 ({dnc})"
+contrDisplayNotif = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/20 ({dnc}) I You picked up an item! enter inv to remove notification."
+
+#gameplay loop
 
 while True:
 
@@ -67,6 +98,9 @@ while True:
         print(contrDisplay)
     
     uInp = getch()
+
+#time
+    calctime(t=True)
 
 #movement
     if uInp == 'w':
@@ -106,7 +140,7 @@ while True:
             if random.randint(1,15) == 5:
                 addItem("berry")
     
-#other controllers
+#other controls
 
     if uInp == 'i':
         while True:
@@ -117,3 +151,5 @@ while True:
             if invInp == 'q':
                 notifCode = False
                 break
+    
+    
