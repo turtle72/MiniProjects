@@ -4,6 +4,7 @@ import os
 import copy
 fMap = {}
 
+bCount = 0
 
 treeDB = []
 
@@ -32,7 +33,10 @@ pX = 12
 pY = 13
 fMap[pY][pX] = '@'
 
-
+#bear
+bX = 5
+bY = 1
+fMap[bY][bX] = 'b'
 
 #trees
 treeCount = 0
@@ -65,23 +69,41 @@ def calctime(t=False):
     global dnc, time, contrDisplay, contrDisplayNotif
     if t == True:
         time = time + 1
-    if time > 40:
+    if time > 60:
         time = 0
-    if time > 25:
+    if time > 45:
         dnc = 'night'
     else:
         dnc = 'day'
         
-    contrDisplay = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/20 ({dnc})"
-    contrDisplayNotif = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/20 ({dnc}) I You picked up an item! enter inv to remove notification."
+    contrDisplay = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/60 ({dnc})"
+    contrDisplayNotif = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/60 ({dnc}) I You picked up an item! enter inv to remove notification."
+
+#bear direction to player calc
+def bDir():
+    global bX, bY, bInp
+
+    diffY = pY - bY
+    diffX = pX - bX
+
+    if abs(diffY) > abs(diffX):
+        if diffY > 0:
+            bInp = 's'
+        else:
+            bInp = 'w'
+    else:
+        if diffX > 0:
+            bInp = 'd'
+        else:
+            bInp = 'a'
 
 
+        
+        
 
+contrDisplay = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/60 ({dnc})"
+contrDisplayNotif = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/60 ({dnc}) I You picked up an item! enter inv to remove notification."
 
-    
-    
-contrDisplay = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/20 ({dnc})"
-contrDisplayNotif = f"Player cords: X:{pX} Y:{pY}, Open Inventory: I, Time is {time}/20 ({dnc}) I You picked up an item! enter inv to remove notification."
 
 #gameplay loop
 
@@ -91,7 +113,9 @@ while True:
     os.system('clear')
  
     for item in fMap:
-        print(fMap[item])
+        if dnc == 'day':
+            print(fMap[item])
+            
     if notifCode == True:
         print(contrDisplayNotif)
     else:
@@ -151,5 +175,39 @@ while True:
             if invInp == 'q':
                 notifCode = False
                 break
+
+#bear mode
+
+    if random.randint(1,2) == 2:
+        bDir()
+    else:
+        bInp = ''
     
+    if bInp == 'w':
+        if  bY-1 != 0 and fMap[bY-1][bX] == '_':
+            fMap[bY][bX] = '_'
+            bY = bY - 1
+            fMap[bY][bX] = 'b'
+
+
+
+    if bInp == 's':
+        if  bY != 25 and fMap[bY+1][bX] == '_':
+            fMap[bY][bX] = '_'
+            bY = bY + 1
+            fMap[bY][bX] = 'b'
+
+
+    if bInp == 'd':
+        if bX != 24 and fMap[bY][bX+1] == '_':
+            fMap[bY][bX] = '_'
+            bX = bX + 1
+            fMap[bY][bX] = 'b'
+
+
+    if bInp == 'a':
+        if bX != 0 and fMap[bY][bX-1] == '_':
+            fMap[bY][bX] = '_'
+            bX = bX - 1
+            fMap[bY][bX] = 'b'
     
